@@ -21,10 +21,10 @@ public class Book {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "sinopsis")
-    private String sinopsis;
+    @Column(name = "synopsis")
+    private String synopsis;
 
-    @Column(name = "funFacts")
+    @Column(name = "fun_facts")
     private String funFacts;
 
     @Column(name = "rating")
