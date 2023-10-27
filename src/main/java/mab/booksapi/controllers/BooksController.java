@@ -1,5 +1,6 @@
 package mab.booksapi.controllers;
 
+import lombok.AllArgsConstructor;
 import mab.booksapi.models.Book;
 import mab.booksapi.repositories.IBooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
+@AllArgsConstructor
 public class BooksController {
 
-    @Autowired
     private IBooksRepository booksRepository;
 
     @GetMapping("/")
