@@ -1,7 +1,9 @@
 package mab.booksapi.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.LazyGroup;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Book {
 
     @Id
@@ -25,14 +28,18 @@ public class Book {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "synopsis")
+    @Column(name = "synopsis", length = 1000)
     private String synopsis;
 
-    @Column(name = "fun_facts")
+    @Column(name = "fun_facts", length = 1000)
     private String funFacts;
 
     @Column(name = "rating")
     private double rating;
+
+    @Column(name = "cover", length = 1000)
+    @Nullable
+    private String cover;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

@@ -2,13 +2,15 @@ package mab.booksapi.controllers;
 
 import lombok.AllArgsConstructor;
 import mab.booksapi.models.Book;
+import mab.booksapi.models.dtos.BookCardDTO;
+import mab.booksapi.models.dtos.BookDetailsDTO;
 import mab.booksapi.repositories.IBooksRepository;
+import mab.booksapi.services.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,15 +19,29 @@ import java.util.List;
 @AllArgsConstructor
 public class BooksController {
 
-    private IBooksRepository booksRepository;
+    private BooksService booksService;
 
-    @GetMapping("/")
-    public ResponseEntity<List<Book>> getAllBooks() {
-        return ResponseEntity.ok(booksRepository.findAll());
+    @GetMapping("")
+    public ResponseEntity<List<BookCardDTO>> getAllBooks(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "10") int size) {
+        try {
+            return ResponseEntity.ok(booksService.getAllBooks(PageRequest.of(page, size)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Book> createBook(Book book) {
-        return ResponseEntity.ok(booksRepository.save(book));
+    @GetMapping("/{id}")
+    public ResponseEntity<BookDetailsDTO> getBookDetails(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(booksService.getBookDetails(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
+//    @PostMapping("/")
+//    public ResponseEntity<String> createBook(Book book) {
+//        return ResponseEntity.ok("Jest w pyte.");
+//    }
 }

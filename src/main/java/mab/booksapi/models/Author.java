@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,10 +29,10 @@ public class Author {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "about")
+    @Column(name = "about", length = 1000)
     private String about;
 
-    @Column(name = "photo")
+    @Column(name = "photo", length = 1000)
     private String photo;
 
     @OneToMany(mappedBy = "author")
