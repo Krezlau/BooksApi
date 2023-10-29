@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -34,4 +35,7 @@ public class Review {
 
     @Column(name = "rating")
     private double rating;
+
+    @OneToMany(mappedBy = "review")
+    private List<Comment> comments;
 }

@@ -1,15 +1,11 @@
 package mab.booksapi.controllers;
 
 import lombok.AllArgsConstructor;
-import mab.booksapi.models.Book;
 import mab.booksapi.models.dtos.BookCardDTO;
 import mab.booksapi.models.dtos.BookDetailsDTO;
-import mab.booksapi.repositories.IBooksRepository;
 import mab.booksapi.services.BooksService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

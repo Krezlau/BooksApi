@@ -18,12 +18,10 @@ public class BooksService {
 
     private final IBooksRepository booksRepository;
 
-    @Transactional
     public List<BookCardDTO> getAllBooks(Pageable pageable) {
         return booksRepository.findAll(pageable).map(BookCardDTO::fromBook).toList();
     }
 
-    @Transactional
     public BookDetailsDTO getBookDetails(String id) {
         Book book = booksRepository.findById(UUID.fromString(id)).orElseThrow();
         return BookDetailsDTO.fromBook(book);
