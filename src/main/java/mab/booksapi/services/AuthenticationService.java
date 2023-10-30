@@ -29,6 +29,17 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(Role.USER)
                 .build();
+        // check if user with that username already exists
+        var userWithTheSameUsername = repository.findByUsername(user.getUsername());
+        if (userWithTheSameUsername.isPresent()) {
+            throw new RuntimeException("User with that username already exists");
+        }
+        // check if user with that email already exists
+        var userWithTheSameEmail = repository.findByEmail(user.getEmail());
+        if (userWithTheSameEmail.isPresent()) {
+            throw new RuntimeException("User with that email already exists");
+        }
+        // save user
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

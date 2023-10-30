@@ -19,7 +19,7 @@ public class AuthorsController {
 
     private final AuthorsService authorsService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<AuthorDTO>> getAllAuthors(@RequestParam(defaultValue = "0") int page,
                                                          @RequestParam(defaultValue = "5") int size) {
         try {

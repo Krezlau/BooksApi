@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 public class RegisterRequest {
 
     @NotBlank(message = "Username is required")
-    @Min(value = 3, message = "Username must be at least 3 characters long")
-    @Max(value = 20, message = "Username must be at most 20 characters long")
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters long")
     @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username must contain only letters and numbers")
     private String username;
 
@@ -23,7 +22,7 @@ public class RegisterRequest {
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Min(value = 8, message = "Password must be at least 8 characters long")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",
             message = "Password must contain at least one uppercase letter, one lowercase letter and one number")
     private String password;

@@ -7,6 +7,7 @@ import mab.booksapi.models.Requests.RegisterRequest;
 import mab.booksapi.models.Responses.AuthenticationResponse;
 import mab.booksapi.services.AuthenticationService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,12 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest registerRequest) {
-        return ResponseEntity.ok(authenticationService.register(registerRequest));
+        try {
+            return ResponseEntity.ok(authenticationService.register(registerRequest));
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 

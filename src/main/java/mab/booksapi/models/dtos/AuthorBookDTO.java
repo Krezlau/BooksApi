@@ -13,11 +13,13 @@ import mab.booksapi.models.Book;
 public class AuthorBookDTO {
     private String id;
     private String title;
+    private double rating;
 
     public static AuthorBookDTO fromBook(Book book) {
         return AuthorBookDTO.builder()
                 .id(book.getId().toString())
                 .title(book.getTitle())
+                .rating(book.getRating())
                 .build();
     }
 }
