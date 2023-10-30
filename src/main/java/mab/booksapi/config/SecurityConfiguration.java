@@ -28,6 +28,9 @@ public class SecurityConfiguration {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/books/**"))
                         .hasAnyAuthority("USER", "ADMIN"))
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/reviews/**"))
+                        .hasAnyAuthority("USER", "ADMIN"))
+                .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/auth/**"))
                         .permitAll())
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

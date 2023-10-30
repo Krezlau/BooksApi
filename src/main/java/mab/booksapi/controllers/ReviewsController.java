@@ -1,7 +1,7 @@
 package mab.booksapi.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.websocket.server.PathParam;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import mab.booksapi.config.JwtService;
 import mab.booksapi.models.Requests.ReviewCreateRequest;
@@ -11,15 +11,12 @@ import mab.booksapi.models.dtos.ReviewDTO;
 import mab.booksapi.repositories.IUserRepository;
 import mab.booksapi.services.ReviewsService;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -35,7 +32,6 @@ public class ReviewsController {
                                                              @RequestParam(defaultValue = "0") int page,
                                                              @RequestParam(defaultValue = "10") int size) {
         try {
-
           return ResponseEntity.ok(reviewsService.getReviewsByBookId(bookId, PageRequest.of(page, size)));
       }
       catch (Exception e) {
@@ -45,7 +41,7 @@ public class ReviewsController {
 
    @PostMapping("/by-book/{bookId}")
     public ResponseEntity<ReviewDTO> postReview(@PathVariable String bookId,
-                                                @RequestBody ReviewCreateRequest review,
+                                                @Valid @RequestBody ReviewCreateRequest review,
                                                 HttpServletRequest request) {
       try {
           String username = jwtService.extractUsername(request.getHeader("Authorization").substring(7));

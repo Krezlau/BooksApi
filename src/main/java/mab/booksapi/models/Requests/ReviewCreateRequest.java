@@ -1,5 +1,6 @@
 package mab.booksapi.models.Requests;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,6 @@ public class ReviewCreateRequest {
     @NotBlank(message = "Content is required")
     private String content;
 
-    @NotBlank(message = "Rating is required")
     @RatingConstraint
     private double rating;
 }

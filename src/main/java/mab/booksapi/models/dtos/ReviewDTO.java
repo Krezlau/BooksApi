@@ -18,11 +18,13 @@ public class ReviewDTO {
     private String userId;
     private String username;
     private String content;
+    private double rating;
     private int commentsCount;
 
     public static ReviewDTO fromReview(Review review) {
         int commentsCount = review.getComments() != null ? review.getComments().size() : 0;
         return ReviewDTO.builder()
+                .rating(review.getRating())
                 .id(review.getId().toString())
                 .userId(review.getUser().getId().toString())
                 .username(review.getUser().getUsername())

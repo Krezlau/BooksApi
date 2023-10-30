@@ -1,5 +1,6 @@
 package mab.booksapi.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mab.booksapi.models.Requests.LoginRequest;
 import mab.booksapi.models.Requests.RegisterRequest;
@@ -19,13 +20,13 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest registerRequest) {
         return ResponseEntity.ok(authenticationService.register(registerRequest));
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         return ResponseEntity.ok(authenticationService.login(loginRequest));
     }
 }
