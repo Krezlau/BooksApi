@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/reviews")
 @AllArgsConstructor
 public class ReviewsController {
 
@@ -30,7 +30,7 @@ public class ReviewsController {
    private final JwtService jwtService;
    private final IUserRepository userRepository;
 
-    @GetMapping("/books/{bookId}/reviews")
+    @GetMapping("/by-book/{bookId}")
     public ResponseEntity<List<ReviewDTO>> getReviewsForBook(@PathVariable String bookId,
                                                              @RequestParam(defaultValue = "0") int page,
                                                              @RequestParam(defaultValue = "10") int size) {
@@ -43,8 +43,10 @@ public class ReviewsController {
       }
    }
 
-   @PostMapping("/books/{bookId}/reviews")
-    public ResponseEntity<ReviewDTO> postReview(@PathVariable String bookId, @RequestBody ReviewCreateRequest review, HttpServletRequest request) {
+   @PostMapping("/by-book/{bookId}")
+    public ResponseEntity<ReviewDTO> postReview(@PathVariable String bookId,
+                                                @RequestBody ReviewCreateRequest review,
+                                                HttpServletRequest request) {
       try {
           String username = jwtService.extractUsername(request.getHeader("Authorization").substring(7));
           User user = userRepository.findByUsername(username).orElseThrow();
@@ -54,5 +56,25 @@ public class ReviewsController {
       catch (Exception e) {
           return ResponseEntity.badRequest().build();
       }
+   }
+
+   @DeleteMapping("/{reviewId}")
+    public ResponseEntity<String> deleteReview(@PathVariable String reviewId,
+                                               HttpServletRequest request) {
+       // check if user is the owner of the review
+       try {
+           String username = jwtService.extractUsername(request.getHeader("Authorization").substring(7));
+           User user = userRepository.findByUsername(username).orElseThrow();
+
+           Review review = reviewsService.getReviewById(reviewId);
+           if (review.getUser().getId() != user.getId()) {
+               return ResponseEntity.badRequest().build();
+           }
+           reviewsService.deleteReview(review);
+           return ResponseEntity.ok().build();
+       }
+       catch (Exception e) {
+              return ResponseEntity.badRequest().build();
+       }
    }
 }

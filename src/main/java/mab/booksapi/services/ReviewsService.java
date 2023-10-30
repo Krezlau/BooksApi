@@ -23,6 +23,10 @@ public class ReviewsService {
         return reviewRepository.getReviewsByBook_Id(UUID.fromString(bookId), pageable).stream().map(ReviewDTO::fromReview).toList();
     }
 
+    public Review getReviewById(String reviewId) {
+        return reviewRepository.findById(UUID.fromString(reviewId)).orElseThrow();
+    }
+
     public ReviewDTO saveReview(ReviewCreateRequest review, UUID userId, String bookId) {
         return ReviewDTO.fromReview(reviewRepository.save(Review.builder()
                 .user(User.builder().id(userId).build())
@@ -32,4 +36,7 @@ public class ReviewsService {
                 .build()));
     }
 
+    public void deleteReview(Review review) {
+        reviewRepository.delete(review);
+    }
 }
