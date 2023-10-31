@@ -7,6 +7,7 @@ import mab.booksapi.models.Requests.RegisterRequest;
 import mab.booksapi.models.Responses.AuthenticationResponse;
 import mab.booksapi.models.Role;
 import mab.booksapi.models.User;
+import mab.booksapi.models.exceptions.AuthException;
 import mab.booksapi.repositories.IUserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +23,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest registerRequest) {
+    public AuthenticationResponse register(RegisterRequest registerRequest) throws AuthException {
         var user = User.builder()
                 .username(registerRequest.getUsername())
                 .email(registerRequest.getEmail())
@@ -32,12 +33,12 @@ public class AuthenticationService {
         // check if user with that username already exists
         var userWithTheSameUsername = repository.findByUsername(user.getUsername());
         if (userWithTheSameUsername.isPresent()) {
-            throw new RuntimeException("User with that username already exists");
+            throw new AuthException("User with that username already exists");
         }
         // check if user with that email already exists
         var userWithTheSameEmail = repository.findByEmail(user.getEmail());
         if (userWithTheSameEmail.isPresent()) {
-            throw new RuntimeException("User with that email already exists");
+            throw new AuthException("User with that email already exists");
         }
         // save user
         repository.save(user);
