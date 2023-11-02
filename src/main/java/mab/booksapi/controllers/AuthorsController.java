@@ -1,7 +1,7 @@
 package mab.booksapi.controllers;
 
 import lombok.AllArgsConstructor;
-import mab.booksapi.services.AuthorDTO;
+import mab.booksapi.models.dtos.AuthorDTO;
 import mab.booksapi.services.AuthorsService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package mab.booksapi.services;
+package mab.booksapi.models.dtos;
 
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mab.booksapi.models.Author;
-import mab.booksapi.models.dtos.AuthorBookDTO;
 
 import java.util.List;
 

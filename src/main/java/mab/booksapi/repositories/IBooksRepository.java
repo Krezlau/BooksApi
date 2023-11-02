@@ -9,6 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface IBooksRepository extends JpaRepository<Book, UUID> {
-    List<Book> findAllByRatingIsGreaterThan(double rating);
 }
 

@@ -34,9 +34,6 @@ public class Book {
     @Column(name = "fun_facts", length = 1000)
     private String funFacts;
 
-    @Column(name = "rating")
-    private double rating;
-
     @Column(name = "cover", length = 1000)
     @Nullable
     private String cover;
@@ -48,4 +45,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags;
+
+    @OneToMany(mappedBy = "book")
+    private List<Review> reviews;
 }

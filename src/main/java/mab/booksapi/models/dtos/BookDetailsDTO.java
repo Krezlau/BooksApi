@@ -21,7 +21,6 @@ public class BookDetailsDTO {
     private String title;
     private String synopsis;
     private String funFacts;
-    private double rating;
     private String cover;
     private List<String> tags;
 
@@ -34,7 +33,6 @@ public class BookDetailsDTO {
                 .title(book.getTitle())
                 .synopsis(book.getSynopsis())
                 .funFacts(book.getFunFacts())
-                .rating(book.getRating())
                 .cover(book.getCover())
                 .tags(book.getTags().stream().map(Tag::getName).toList())
                 .build();

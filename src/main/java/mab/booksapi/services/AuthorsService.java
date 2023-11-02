@@ -2,6 +2,7 @@ package mab.booksapi.services;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import mab.booksapi.models.dtos.AuthorDTO;
 import mab.booksapi.repositories.IAuthorRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
