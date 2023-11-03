@@ -27,13 +27,13 @@ public class SecurityConfiguration {
         http.csrf().disable()
                 .cors().and()
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/books/**"))
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/**"))
+                        .permitAll())
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/reviews/**"))
                         .hasAnyAuthority("USER", "ADMIN"))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/authors/**"))
-                        .hasAnyAuthority("USER", "ADMIN"))
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/reviews/**"))
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/reviews/**"))
                         .hasAnyAuthority("USER", "ADMIN"))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/auth/**"))
