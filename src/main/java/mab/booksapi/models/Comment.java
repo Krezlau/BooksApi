@@ -28,6 +28,6 @@ public class Comment {
     @JoinColumn(name = "review_id")
     private Review review;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 1024)
     private String content;
 }
