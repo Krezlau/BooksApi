@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/reviews/**"))
                         .hasAnyAuthority("USER", "ADMIN"))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/reviews/**"))
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/**"))
                         .hasAnyAuthority("USER", "ADMIN"))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/auth/**"))

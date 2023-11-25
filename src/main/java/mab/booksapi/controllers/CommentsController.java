@@ -50,4 +50,16 @@ public class CommentsController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @DeleteMapping("{id:uuid}")
+    public ResponseEntity<UUID> PostComment(@PathVariable UUID id, HttpServletRequest request){
+        try {
+            String username = jwtService.extractUsername(request.getHeader("Authorization").substring(7));
+            commentsService.DeleteComment(id, username);
+            return ResponseEntity.noContent().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

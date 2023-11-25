@@ -7,6 +7,7 @@ import mab.booksapi.models.User;
 import mab.booksapi.models.dtos.CommentCreateDTO;
 import mab.booksapi.models.dtos.CommentDTO;
 import mab.booksapi.repositories.ICommentRepository;
+import mab.booksapi.repositories.IUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CommentsService {
     private final ICommentRepository commentRepository;
+    private final IUserRepository userRepository;
     
     public List<CommentDTO> fetchCommentsForReview(UUID reviewId){
         Review review = Review.builder().id(reviewId).build();
@@ -29,5 +31,14 @@ public class CommentsService {
                         .review(Review.builder().id(comment.getReviewId()).build())
                         .content(comment.getContent())
                         .build());
+    }
+    
+    public void DeleteComment(UUID commentID, String username) throws Exception {
+        User user = userRepository.findByUsername(username).orElseThrow();
+        Comment comment = commentRepository.findById(commentID).orElseThrow();
+        if (comment.getUser().getId() != user.getId()) {
+            throw new Exception("Forbidden.");
+        }
+        commentRepository.delete(comment);
     }
 }
