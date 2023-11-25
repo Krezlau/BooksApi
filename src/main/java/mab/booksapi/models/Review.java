@@ -36,6 +36,6 @@ public class Review {
     @Column(name = "rating")
     private double rating;
 
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<Comment> comments;
 }

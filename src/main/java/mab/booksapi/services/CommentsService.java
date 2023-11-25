@@ -19,8 +19,9 @@ public class CommentsService {
     private final ICommentRepository commentRepository;
     private final IUserRepository userRepository;
     
-    public List<CommentDTO> fetchCommentsForReview(UUID reviewId){
-        Review review = Review.builder().id(reviewId).build();
+    public List<CommentDTO> fetchCommentsForReview(String reviewId){
+        UUID reviewIdUUID = UUID.fromString(reviewId);
+        Review review = Review.builder().id(reviewIdUUID).build();
         List<Comment> lc = commentRepository.findAllByReview(review);
         return lc.stream().map(CommentDTO::fromComment).toList();
     }
@@ -33,9 +34,10 @@ public class CommentsService {
                         .build());
     }
     
-    public void DeleteComment(UUID commentID, String username) throws Exception {
+    public void DeleteComment(String commentID, String username) throws Exception {
+        UUID commentUUID = UUID.fromString(commentID);
         User user = userRepository.findByUsername(username).orElseThrow();
-        Comment comment = commentRepository.findById(commentID).orElseThrow();
+        Comment comment = commentRepository.findById(commentUUID).orElseThrow();
         if (comment.getUser().getId() != user.getId()) {
             throw new Exception("Forbidden.");
         }

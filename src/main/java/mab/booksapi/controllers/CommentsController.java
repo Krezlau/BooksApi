@@ -25,8 +25,8 @@ public class CommentsController {
     private final JwtService jwtService;
     private final IUserRepository userRepository;
     
-    @GetMapping("/by-review/{reviewId:uuid}")
-    public ResponseEntity<List<CommentDTO>> GetCommentsForReview(@PathVariable UUID reviewId) {
+    @GetMapping("/by-review/{reviewId}")
+    public ResponseEntity<List<CommentDTO>> GetCommentsForReview(@PathVariable String reviewId) {
         try
         {
             List<CommentDTO> comments = commentsService.fetchCommentsForReview(reviewId);
@@ -51,8 +51,8 @@ public class CommentsController {
         }
     }
 
-    @DeleteMapping("{id:uuid}")
-    public ResponseEntity<UUID> PostComment(@PathVariable UUID id, HttpServletRequest request){
+    @DeleteMapping("{id}")
+    public ResponseEntity<UUID> PostComment(@PathVariable String id, HttpServletRequest request){
         try {
             String username = jwtService.extractUsername(request.getHeader("Authorization").substring(7));
             commentsService.DeleteComment(id, username);
